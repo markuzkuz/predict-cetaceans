@@ -66,7 +66,6 @@ Scripts dedicados al procesamiento, análisis y modelado final:
 - pH oceánico y su tendencia e incertidumbre (ph_trend y ph_tend_uncertainity)
 - Clorofila-a, bbp, poc (valores mensuales medios y sus respectivos errores)
 - Altura media del nivel del mar y componentes horizontales y verticales (mdt, u, v)
-- 
 
 ## ️ Requisitos:
 
