@@ -9,4 +9,4 @@ df['longitude'] = np.floor(df['longitude'] / 0.5) * 0.5
 
 agrupadas = df.groupby(['latitude', 'longitude']).median(numeric_only=True).reset_index()
 agrupadas.to_csv("df_malla.csv", index=False)
-print("✅ CSV agregado generado con malla 0.5°x0.5°.")
+print("CSV agregado generado con malla 0.5°x0.5°.")
