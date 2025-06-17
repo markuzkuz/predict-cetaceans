@@ -25,17 +25,17 @@ for csv_file in tqdm(csv_files, desc="Combinando CSVs"):
 # Verificación de duplicados
 duplicates = merged_df.duplicated(subset=["latitude", "longitude"]).sum()
 if duplicates > 0:
-    print(f"⚠️ Encontrados {duplicates} duplicados de coordenadas. Eliminando...")
+    print(f"️ Encontrados {duplicates} duplicados de coordenadas. Eliminando...")
     merged_df = merged_df.drop_duplicates(subset=["latitude", "longitude"])
 else:
-    print("✅ No se encontraron duplicados de coordenadas.")
+    print(" No se encontraron duplicados de coordenadas.")
 
 # Verificación de cobertura de longitudes
-print("\n📊 Resumen de longitudes:")
+print("\n Resumen de longitudes:")
 print(merged_df["longitude"].describe())
-print("\n🔎 Frecuencia por deciles de longitud:")
+print("\n Frecuencia por deciles de longitud:")
 print(pd.cut(merged_df["longitude"], bins=10).value_counts().sort_index())
 
 # Guardar resultado combinado
 merged_df.to_csv("df_final.csv", index=False)
-print("✅ Archivo combinado guardado como: df_final.csv")
+print("Archivo combinado guardado como: df_final.csv")
