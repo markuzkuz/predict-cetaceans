@@ -20,12 +20,12 @@ def process_variable(varname):
         nc_file = base_dir / f"cmems_obs-mob_glo_bgc-chl-poc_my_0.25deg-climatology_P1M-m_{month:02d}_P202411.nc"
         
         if not nc_file.exists():
-            print(f"⚠️ Falta archivo mes {month}: {nc_file}")
+            print(f"Falta archivo mes {month}: {nc_file}")
             continue
 
         ds = xr.open_dataset(nc_file)
         if varname not in ds:
-            print(f"⚠️ Variable {varname} no está en el archivo {nc_file.name}")
+            print(f"Variable {varname} no está en el archivo {nc_file.name}")
             continue
 
         data = ds[varname]
@@ -44,7 +44,7 @@ def process_variable(varname):
         all_months.append(flat_df)
 
     if not all_months:
-        print(f"❌ No se encontraron datos válidos para {varname}")
+        print(f"No se encontraron datos válidos para {varname}")
         return
 
     # Promediar los 12 meses por celda
@@ -66,18 +66,18 @@ def process_variable(varname):
     # Guardado individual (opcional)
     out_file = out_dir / f"{varname}_valores_anual_05deg.csv"
     df_replicated.to_csv(out_file, index=False)
-    print(f"✅ Guardado: {out_file}")
+    print(f"Guardado: {out_file}")
 
 # Ejecutar todos los pasos
 for varname in vars:
     process_variable(varname)
 
 # Unir todos los dataframes replicados
-print("\n🔁 Uniendo variables en un único CSV final...")
+print("\nUniendo variables en un único CSV final...")
 from functools import reduce
 df_clorofila_final = reduce(lambda left, right: pd.merge(left, right, on=["latitude", "longitude", "year"], how="outer"), replicated_dfs)
 
 # Guardar resultado final
 final_file = out_dir / "df_clorofila_completo.csv"
 df_clorofila_final.to_csv(final_file, index=False)
-print(f"\n🎯 Archivo combinado guardado como: {final_file}")
+print(f"\nArchivo combinado guardado como: {final_file}")
