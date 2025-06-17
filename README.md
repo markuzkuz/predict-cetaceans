@@ -28,7 +28,7 @@ predicts-cetaceans/
 ├── resultados_* # Resultados intermedios por variable
 ├─Final/
 │ ├df_final.py # Unir los distintos csv y combinarl con un merge
-│|limpiar_df.py # Eliminar valores NA de todas las filas vacías
+│ |limpiar_df.py # Eliminar valores NA de todas las filas vacías
   |malla.py # Generar la malla 0.5º x 0.5º
   |prueba_dataset.py # Script de pruebas para df finales
   |unir_dinamico.py # Unir todos los datasets de las variables dinámicas
@@ -67,6 +67,10 @@ Recomendado -- Usar entorno virtual:
 
 ```bash
 python -m venv venv
+
+
+Máster Universitario en Bioinformática — UNIR
+Trabajo Fin de Máster (2025)
 source venv/bin/activate
 pip install -r requirements.txt
 
