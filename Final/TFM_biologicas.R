@@ -16,12 +16,12 @@ glimpse(physeter)
 glimpse(orcinus)
 
 
-# Convertir la columna 'dateIdentified' a datetime (si es necesario)
+# Convertir la columna 'dateIdentified' a datetime:
 balaenoptera$dateIdentified <- as.POSIXct(balaenoptera$dateIdentified, format="%Y-%m-%d", tz="UTC")
 physeter$dateIdentified <- as.POSIXct(physeter$dateIdentified, format="%Y-%m-%d", tz="UTC")
 orcinus$dateIdentified <- as.POSIXct(orcinus$dateIdentified, format="%Y-%m-%d", tz="UTC")
 
-# Convertir la columna 'georeferencedDate' a datetime (si es necesario)
+# Convertir la columna 'georeferencedDate' a datetime:
 balaenoptera$georeferencedDate <- as.POSIXct(balaenoptera$georeferencedDate, format="%Y-%m-%d", tz="UTC")
 physeter$georeferencedDate <- as.POSIXct(physeter$georeferencedDate, format="%Y-%m-%d", tz="UTC")
 orcinus$georeferencedDate <- as.POSIXct(orcinus$georeferencedDate, format="%Y-%m-%d", tz="UTC")
@@ -469,8 +469,6 @@ fviz_pca_var(res_pca,
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
              repel = TRUE)
 
-
-
 # Unión con datos de clorofila (solo desde 1998)
 df_combined_1998 <- df_combined %>%
   filter(date_year >= 1998, date_year <= 2022)
@@ -523,78 +521,7 @@ fviz_pca_var(res_pca_chloro,
 
 ###############################
 
-# Preparar df_combined_chloro NOoOoooooooo:
-
-library(tidyverse)
-library(caret)
-library(randomForest)
-
-# --- PREPROCESSING STEPS (applies once globally) ---
-df_chloro_processed <- df_combined_chloro %>%
-  # Remove variables with "_error"
-  dplyr:::select(-matches("_error")) %>%
-  # Scale chlorophyll variables
-  mutate(across(any_of(c("chl", "bbp", "poc")), scale, .names = "{.col}_scaled"))
-
-# Define species of interest
-especies_objetivo <- c("Balaenoptera musculus", "Orcinus orca", "Physeter macrocephalus")
-
-# Create a list to store RFE results
-rfe_resultados <- list()
-variables_por_especie <- list()
-
-# LOOP for each species
-for (especie in especies_objetivo) {
-  cat("▶ Procesando especie:", especie, "\n")
-  
-  # --- 1. BINARIZE PRESENCE ---
-  df_rfe <- df_chloro_processed %>%
-    mutate(presencia = ifelse(species_clean == especie, 1, 0)) %>%
-    dplyr:::select(presencia, where(is.numeric)) %>%
-    drop_na()
-  
-  # --- 2. BALANCE DATASET ---
-  pres <- df_rfe %>% filter(presencia == 1)
-  aus  <- df_rfe %>% filter(presencia == 0) %>%
-    sample_n(nrow(pres), replace = TRUE)
-  df_sample <- bind_rows(pres, aus)
-  df_sample$presencia <- as.factor(df_sample$presencia)
-  
-  # --- 3. RFE VARIABLE SELECTION ---
-  set.seed(123)
-  control <- rfeControl(functions = rfFuncs, method = "cv", number = 5)
-  rfe_result <- rfe(
-    df_sample %>% dplyr:::select(-presencia),
-    df_sample$presencia,
-    sizes = seq(5, min(30, ncol(df_sample) - 1), by = 5),
-    rfeControl = control
-  )
-  
-  # Save outputs
-  rfe_resultados[[especie]] <- rfe_result
-  variables_por_especie[[especie]] <- predictors(rfe_result)
-  cat("  ➤ Variables seleccionadas:", paste(predictors(rfe_result), collapse = ", "), "\n\n")
-}
-
-# 1. Obtener la unión de todas las variables seleccionadas
-todas_vars_seleccionadas <- unique(unlist(variables_por_especie))
-
-# 2. Añadir las variables clave necesarias para el modelado
-variables_fijas <- c("species_clean", "species", "decimalLatitude", "decimalLongitude")
-
-# 3. Construir el nuevo df_combined_chloro final
-df_combined_chloro <- df_chloro_processed %>%
-  dplyr:::select(all_of(c(variables_fijas, todas_vars_seleccionadas))) %>%
-  drop_na()
-
-# Verifica resultado
-glimpse(df_combined_chloro)
-
-#############NOOOOOOO#######################
-
-############ AIXOOOOOO #########
-
-# Para las tres especies - MODELAR ESPECIE:
+# Para las tres especies - MODELAR ESPECIE :
 
 install.packages(c("gbm", "naivebayes", "klaR", "caret", "pROC", "e1071", "randomForest", "ggplot2"))
 
@@ -636,7 +563,7 @@ modelar_especie <- function(nombre_especie, df) {
   
   # --- Balancear 1:1
   if (nrow(aus) < nrow(pres)) {
-    warning("⚠️ Menos pseudo-ausencias que presencias. Usando 'replace = TRUE'")
+    warning("Menos pseudo-ausencias que presencias. Usando 'replace = TRUE'")
     aus <- sample_n(aus, nrow(pres), replace = TRUE)
   } else {
     aus <- sample_n(aus, nrow(pres), replace = FALSE)
@@ -647,7 +574,7 @@ modelar_especie <- function(nombre_especie, df) {
     dplyr:::select(presencia, where(is.numeric)) %>%
     drop_na()
   
-  # --- Particionar en train/test
+  # --- Partir en train/test
   set.seed(123)
   train_idx <- createDataPartition(df_balanced$presencia, p = 0.8, list = FALSE)
   train <- df_balanced[train_idx, ]
@@ -775,7 +702,7 @@ modelar_especie <- function(nombre_especie, df) {
   
   # --- Balancear 1:1
   if (nrow(aus) < nrow(pres)) {
-    warning("⚠️ Menos pseudo-ausencias que presencias. Usando 'replace = TRUE'")
+    warning("Menos pseudo-ausencias que presencias. Usando 'replace = TRUE'")
     aus <- sample_n(aus, nrow(pres), replace = TRUE)
   } else {
     aus <- sample_n(aus, nrow(pres), replace = FALSE)
@@ -786,7 +713,7 @@ modelar_especie <- function(nombre_especie, df) {
     select(presencia, where(is.numeric)) %>%
     drop_na()
   
-  # --- Particionar en train/test
+  # --- Partir en train/test
   set.seed(123)
   train_idx <- createDataPartition(df_balanced$presencia, p = 0.8, list = FALSE)
   train <- df_balanced[train_idx, ]
@@ -1112,7 +1039,7 @@ rast_rf <- rasterize(
   na.rm = TRUE
 )
 
-# ⚠️ Verifica si quedó vacío
+# Verificar si queda vacío
 if (all(is.na(values(rast_rf)))) {
   stop("El raster resultante está vacío. Verifica coordenadas y resolución.")
 }
@@ -1152,7 +1079,7 @@ cat("Columnas con NA por variable:\n")
 print(colSums(is.na(df_combined_chloro)))
 
 
-########## BIOMOD2 #########
+########## BIOMOD2 (no funcionó) #########
 install.packages("biomod2")
 library(biomod2)
 library(terra)
@@ -1227,14 +1154,13 @@ for (esp in especies) {
 }
 
 
-# MAX ENT: 
+##############  MAX ENT (cambiar el nombre para cada especie) ####################: 
 library(dplyr)
 library(dismo)
 library(rJava)
 library(terra)
 library(raster)
 library(tidyr)
-library(dplyr)
 
 View(df_maxent)
 # Crear un raster base si no lo tienes
