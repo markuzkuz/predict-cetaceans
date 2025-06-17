@@ -35,8 +35,7 @@ predicts-cetaceans/
     ├── prueba_dataset.py     # Script de pruebas para el dataset final
     ├── unir_dinamico.py      # Unir todos los datasets de las variables dinámicas
     ├── TFM_fisicas.R         # Script en R para análisis exploratorio y gráficos de variables físicas
-    └── TFM_biologicas.R      # Script en R para análisis de variables biológicas y modelado final
-")
+    └── TFM_biologicas.R      # Script en R para análisis de variables biológicas y modelado final ")
 
 
 ##  Algoritmos de aprendizaje supervisado
