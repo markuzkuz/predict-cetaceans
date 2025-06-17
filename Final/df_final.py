@@ -25,4 +25,4 @@ for csv_file in tqdm(csv_files, desc="Combinando CSVs"):
 
 # Guardar resultado final
 merged_df.to_csv("df_final.csv", index=False)
-print("✅ Archivo combinado guardado como: df_final.csv")
+print("Archivo combinado guardado como: df_final.csv")
