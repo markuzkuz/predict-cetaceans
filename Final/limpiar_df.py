@@ -20,4 +20,4 @@ print(f"Dimensiones después de limpiar: {df_clean.shape}")
 
 # Guardar el resultado limpio
 df_clean.to_csv("df_final_limpio.csv", index=False)
-print("✅ Archivo limpio guardado como: df_final_limpio.csv")
+print(" Archivo limpio guardado como: df_final_limpio.csv")
