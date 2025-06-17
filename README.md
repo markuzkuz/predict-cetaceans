@@ -14,27 +14,29 @@ Desarrollar modelos de distribución de especies mediante algoritmos de aprendiz
 - Orcinus orca (Orca)
 
 ##  Estructura del repositorio
+```{r, echo=FALSE, results='asis'}
+cat("
 predicts-cetaceans/
-├── chloro.py # Procesamiento de clorofila mensual
-├── copernicus_last.py # Extracción de variables Copernicus
-├── df_final.py # Unión de datasets y generación de CSV final
+├── chloro.py             # Procesamiento de clorofila mensual
+├── copernicus_last.py    # Extracción de variables Copernicus
+├── df_final.py           # Unión de datasets y generación de CSV final
 ├── extract_copernicus.py # Automatización de descarga .nc Copernicus
-├── mdt_to_csv.py # Conversión de mapas MDT a CSV
-├── nc_to_csv.py # Conversión genérica de NetCDF a CSV
-├── noaa_erddap.py # Acceso a datos NOAA vía ERDDAP API
-├── open.py # Función para abrir  NetCDF y comprobar su estructura y variables.
-├── ph_to_csv.py # Conversión de dataset de pH a CSV
-├── prueba.py # Script auxiliar de pruebas
-├── resultados_* # Resultados intermedios por variable
-├─Final/
-│ ├df_final.py # Unir los distintos csv y combinarl con un merge
-│ |limpiar_df.py # Eliminar valores NA de todas las filas vacías
-  |malla.py # Generar la malla 0.5º x 0.5º
-  |prueba_dataset.py # Script de pruebas para df finales
-  |unir_dinamico.py # Unir todos los datasets de las variables dinámicas
-  |TFM_fisicas.R # Script de R para análisis exploratorio y gráficos de variables estáticas
-  |TFM_biologicas.R # Script de R para análisis de variables biológicas y posterior unión con variables físicas más construcción de modelos y gráficos finales 
-
+├── mdt_to_csv.py         # Conversión de mapas MDT a CSV
+├── nc_to_csv.py          # Conversión genérica de NetCDF a CSV
+├── noaa_erddap.py        # Acceso a datos NOAA vía ERDDAP API
+├── open.py               # Función para abrir NetCDF y comprobar su estructura y variables
+├── ph_to_csv.py          # Conversión de dataset de pH a CSV
+├── prueba.py             # Script auxiliar de pruebas
+├── resultados_*          # Directorios con resultados intermedios por variable
+└── Final/
+    ├── df_final.py           # Unir los distintos CSV y combinarlos con un merge
+    ├── limpiar_df.py         # Eliminar valores NA y filas completamente vacías
+    ├── malla.py              # Generar la malla de resolución 0.5º x 0.5º
+    ├── prueba_dataset.py     # Script de pruebas para el dataset final
+    ├── unir_dinamico.py      # Unir todos los datasets de las variables dinámicas
+    ├── TFM_fisicas.R         # Script en R para análisis exploratorio y gráficos de variables físicas
+    └── TFM_biologicas.R      # Script en R para análisis de variables biológicas y modelado final
+")
 
 
 ##  Algoritmos de aprendizaje supervisado
