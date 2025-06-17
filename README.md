@@ -14,28 +14,30 @@ Desarrollar modelos de distribución de especies mediante algoritmos de aprendiz
 - Orcinus orca (Orca)
 
 ##  Estructura del repositorio
-```{r, echo=FALSE, results='asis'}
-cat("
-predicts-cetaceans/
-├── chloro.py             # Procesamiento de clorofila mensual
-├── copernicus_last.py    # Extracción de variables Copernicus
-├── df_final.py           # Unión de datasets y generación de CSV final
-├── extract_copernicus.py # Automatización de descarga .nc Copernicus
-├── mdt_to_csv.py         # Conversión de mapas MDT a CSV
-├── nc_to_csv.py          # Conversión genérica de NetCDF a CSV
-├── noaa_erddap.py        # Acceso a datos NOAA vía ERDDAP API
-├── open.py               # Función para abrir NetCDF y comprobar su estructura y variables
-├── ph_to_csv.py          # Conversión de dataset de pH a CSV
-├── prueba.py             # Script auxiliar de pruebas
-├── resultados_*          # Directorios con resultados intermedios por variable
-└── Final/
-    ├── df_final.py           # Unir los distintos CSV y combinarlos con un merge
-    ├── limpiar_df.py         # Eliminar valores NA y filas completamente vacías
-    ├── malla.py              # Generar la malla de resolución 0.5º x 0.5º
-    ├── prueba_dataset.py     # Script de pruebas para el dataset final
-    ├── unir_dinamico.py      # Unir todos los datasets de las variables dinámicas
-    ├── TFM_fisicas.R         # Script en R para análisis exploratorio y gráficos de variables físicas
-    └── TFM_biologicas.R      # Script en R para análisis de variables biológicas y modelado final ")
+
+- `chloro.py`: procesamiento de clorofila mensual a partir de archivos NetCDF.
+- `copernicus_last.py`: extracción de datos recientes desde el servicio Copernicus.
+- `df_final.py`: unión final de variables ambientales en un único CSV para el modelado.
+- `extract_copernicus.py`: automatiza la descarga de archivos .nc desde Copernicus.
+- `mdt_to_csv.py`: convierte datos de altura media del mar (MDT) a formato CSV.
+- `nc_to_csv.py`: convierte archivos NetCDF genéricos a CSV.
+- `noaa_erddap.py`: descarga datos desde NOAA usando la API de ERDDAP.
+- `open.py`: función para abrir NetCDF y explorar estructura/variables.
+- `ph_to_csv.py`: extrae datos de pH y tendencias oceánicas y los convierte a CSV.
+- `prueba.py`: script auxiliar de pruebas.
+- `resultados_*`: carpetas con resultados intermedios por variable (estadísticos, mallas, mapas, etc.).
+
+### Final/
+
+Scripts dedicados al procesamiento, análisis y modelado final:
+
+- `df_final.py`: unifica todos los CSV en un solo dataframe con merge por coordenadas y año.
+- `limpiar_df.py`: elimina valores `NA` y filas vacías del dataset final.
+- `malla.py`: genera mallas espaciales regulares de resolución 0.5° x 0.5°.
+- `prueba_dataset.py`: script para inspección y validación del dataset unificado.
+- `unir_dinamico.py`: une únicamente las variables dinámicas a partir de múltiples CSVs.
+- `TFM_fisicas.R`: análisis exploratorio en R de las variables físicas (correlación, PCA, etc.).
+- `TFM_biologicas.R`: análisis de variables biológicas, unión con físicas y modelado con algoritmos de ML (Random Forest, SVM, etc.).
 
 
 ##  Algoritmos de aprendizaje supervisado
