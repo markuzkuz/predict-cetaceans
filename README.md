@@ -55,18 +55,22 @@ predicts-cetaceans/
 - Capa de mezcla (mlotst)
 - Espesor de hielo (sithick)
 - Nivel del mar (zos)
-- pH oceánico y su tendencia (ph_trend)
-- Clorofila-a, bbp, poc (valores mensuales medios)
+- Concentración de hielo marino (siconc)
+- Velocidad hacia el este del hielo marino (usi)
+- Velocidad hacia el norte del hielo marino (vsi)
+- Velocidad este del agua (uo)
+- Velocidad norte del agua (vo)
+- pH oceánico y su tendencia e incertidumbre (ph_trend y ph_tend_uncertainity)
+- Clorofila-a, bbp, poc (valores mensuales medios y sus respectivos errores)
+- Altura media del nivel del mar y componentes horizontales y verticales (mdt, u, v)
+- 
 
 ## ️ Requisitos:
 
 - Python 3.9+
 - Bibliotecas: `pandas`, `numpy`, `xarray`, `netCDF4`, `matplotlib`, `scikit-learn`, `requests`
 
-Recomendado -- Usar entorno virtual:
-
-```bash
-python -m venv venv
+Recomendado -- Usar entorno virtual
 
 
 Máster Universitario en Bioinformática — UNIR
