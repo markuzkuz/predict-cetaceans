@@ -77,8 +77,6 @@ Recomendado -- Usar entorno virtual
 
 Máster Universitario en Bioinformática — UNIR
 Trabajo Fin de Máster (2025)
-source venv/bin/activate
-pip install -r requirements.txt
 
 
 
